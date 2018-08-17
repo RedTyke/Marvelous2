@@ -8,7 +8,7 @@ struct MarvelKeys {
     static let privateKey = "1c65af91f41cb87f5b84d424254b73293ea89d4c"
 }
 
-let name = "Spider"
+let name = "Ant"
 let ts = "1"
 // let ts = Date().timeIntervalSince1970.description
 let hash = ts + MarvelKeys.privateKey + MarvelKeys.publicKey
