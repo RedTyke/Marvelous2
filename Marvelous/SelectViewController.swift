@@ -13,10 +13,24 @@ import UIKit
 
 class SelectViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
+    var characterResults: [Character] = []
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchTextField: UITextField!
+    
+    
     @IBAction func goButtonPressed(_ sender: Any) {
-        print("Let's go search for some stuff")
+        if let character = searchTextField.text {
+            Character.characterDetail(for: character) { (results: [Character]) in
+                for result in results {
+                    self.characterResults.append(result)
+                    print("\(result)\n\n")
+                }
+            
+            self.tableView.reloadData()
+            
+            }
+        }
     }
     var resultsCount = 0
 
@@ -72,7 +86,7 @@ class SelectViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "resultCell", for: indexPath)
         
-        cell.textLabel?.text = "Captain America"
+        cell.textLabel?.text = characterResults[0].name
         
         return cell
         
