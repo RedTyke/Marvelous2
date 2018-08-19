@@ -1,6 +1,13 @@
-import UIKit
-import CryptoSwift
+//
+//  JSON.swift
+//  Marvelous
+//
+//  Created by John McNiffe on 18/08/2018.
+//  Copyright © 2018 John McNiffe. All rights reserved.
+//
 
+import Foundation
+import CryptoSwift
 // MARVEL.COM API GET
 
 struct MarvelKeys {
@@ -8,24 +15,17 @@ struct MarvelKeys {
     static let privateKey = "1c65af91f41cb87f5b84d424254b73293ea89d4c"
 }
 
-let name = "Captain"
+func createURL(forCharacter character: String) -> String {
+
 let ts = Date().timeIntervalSince1970.description
 let hash = ts + MarvelKeys.privateKey + MarvelKeys.publicKey
 let urlClose = "&apikey=\(MarvelKeys.publicKey)"
-
-let hashUTF = hash.utf8
-
+let mainUrl = "https://gateway.marvel.com/v1/public/characters?nameStartsWith=\(character)&ts=\(ts)\(urlClose)&hash=\(hash.md5())"
+    
+    return mainUrl
+}
 
 func hashString(string: String) -> String {
     let encodedText = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
     return encodedText
 }
-
-var mainUrl = "https://gateway.marvel.com/v1/public/characters?nameStartsWith=\(name)&ts=\(ts)\(urlClose)&hash=\(hash.md5())"
-//let mainURLEncrypted = mainUrl.lowercased().md5()
-
-
-
-print("Result: \(mainUrl)")
-
-
