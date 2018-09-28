@@ -9,57 +9,41 @@
 import Foundation
 
 
-struct Character {
+struct Results: Codable {
+    var results: [Character]
+}
+
+struct Character: Codable {
     
     var name: String
     var description: String
     
-
-    enum SerialisationError: Error {
-        case missing (String)
-        case invalid (String, Any)
-    }
     
-    init(json: [String: Any]) throws {
-        guard let name = json["name"] as? String else {throw SerialisationError.missing("Character not available")}
-        guard let description = json["description"] as? String else {throw SerialisationError.missing("Character not available")}
+    static func characterDetail(for character: String, completion: @escaping ([Character]) -> ()) {
+        let jsonUrl = createURL(forCharacter: character)
+        guard let url = URL(string: jsonUrl) else { return }
+        print (url)
         
-        self.name = name
-        self.description = description
+        var characterArray: [Character] = []
         
-    }
-    
-
-static func characterDetail(for character: String, completion: @escaping ([Character]) -> ()) {
-        let url = createURL(forCharacter: character)
-        
-        let request = URLRequest(url: URL(string: url)!)
-        
-        let task = URLSession.shared.dataTask(with: request) { (data:Data?, response:URLResponse?, error:Error?) in
-            
-            var characterArray:[Character] = []
-            
-            if let data = data {
-                
-                do {
-                    
-                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
-                      if let data = json["data"] as? [String:Any] {
-                            if let results = data["results"] as? [[String:Any]] {
-                                for dataPoint in results {
-                                    if let characterObject = try? Character(json: dataPoint) {
-                                        characterArray.append(characterObject)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } catch {
-                    print(error.localizedDescription)
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let data = data else { return }
+            do {
+                let decoder = JSONDecoder()
+                let characters = try decoder.decode([Character].self, from: data)
+                // is order correct
+                for character in characters {
+                    characterArray.append(character)
                 }
-                completion(characterArray)
+                
+                print(characterArray)
+                
+            } catch let jsonErr {
+                print("Error serializing json:", jsonErr)
             }
-        }
-        task.resume()
+            
+            }.resume()
+    }
 }
-}
+    
+

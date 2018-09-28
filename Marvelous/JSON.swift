@@ -8,7 +8,6 @@
 
 import Foundation
 import CryptoSwift
-// MARVEL.COM API GET
 
 struct MarvelKeys {
     static let publicKey = "f9404ee389dfa4321f9aa13c03945ac2"

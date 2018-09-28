@@ -8,11 +8,8 @@
 
 import UIKit
 
-
-
-
-class SelectViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
-
+class SelectViewController: UIViewController, UITextFieldDelegate {
+    
     var characterResults: [Character] = []
     
     @IBOutlet weak var tableView: UITableView!
@@ -20,73 +17,63 @@ class SelectViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     @IBAction func goButtonPressed(_ sender: Any) {
+        
         if let character = searchTextField.text {
             Character.characterDetail(for: character) { (results: [Character]) in
                 for result in results {
                     self.characterResults.append(result)
                     print("\(result)\n\n")
                 }
-            
-            self.tableView.reloadData()
-            
+                DispatchQueue.main.sync {
+                    self.tableView.reloadData()
+                }
             }
         }
     }
-    var resultsCount = 0
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-       /* Character.characterDetail(for: "Iron") { (results: [Character]) in
-            for result in results {
-                print("\(result)\n\n")
-                print("*****Number of Results: \(results.count)")
- 
- 
-            }
-        } */
+        
+        // ******** TESTING JSON - REMOVE THIS LINE WHEN FIXED *******
+       // Character.characterDetail(for: "spider") { (results: [Character]) in
+         //   print(results)
+      //  }
+        // *************************
+        
         tableView.dataSource = self
         tableView.delegate = self
         searchTextField.delegate = self
-        
         
         // hide keyboard
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         gestureRecognizer.cancelsTouchesInView = false
         view.addGestureRecognizer(gestureRecognizer)
-        
-        
     }
-
+    
     @objc func hideKeyboard(_ gestureRecognizer: UIGestureRecognizer) {
         searchTextField.resignFirstResponder()
         print("Touching!")
         
     }
     
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchTextField.resignFirstResponder()
         return false
     }
+}
+
+extension SelectViewController: UITableViewDelegate, UITableViewDataSource {
     
-    
-    
-    
-    func searchCharacter() {
-        
-    }
-    
-    
-    // MARK: - Table View Delegates
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return characterResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "resultCell", for: indexPath)
         
-        cell.textLabel?.text = characterResults[0].name
+        let character = characterResults[indexPath.row]
+        cell.textLabel?.text = character.name
         
         return cell
         
@@ -97,6 +84,4 @@ class SelectViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     
-
 }
-
