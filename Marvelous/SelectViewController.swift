@@ -10,7 +10,7 @@ import UIKit
 
 class SelectViewController: UIViewController, UITextFieldDelegate {
     
-    var characterResults: [Character] = []
+    var characterArray: [Character] = []
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchTextField: UITextField!
@@ -18,13 +18,19 @@ class SelectViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func goButtonPressed(_ sender: Any) {
         
+        characterArray = []
+        print("Button pressed")
         if let character = searchTextField.text {
+            
             Character.characterDetail(for: character) { (results: [Character]) in
+               // this is not running
+                print("Completion handler called")
                 for result in results {
-                    self.characterResults.append(result)
+                   
+                    self.characterArray.append(result)
                     print("\(result)\n\n")
                 }
-                DispatchQueue.main.sync {
+                DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
             }
@@ -33,12 +39,6 @@ class SelectViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // ******** TESTING JSON - REMOVE THIS LINE WHEN FIXED *******
-       // Character.characterDetail(for: "spider") { (results: [Character]) in
-         //   print(results)
-      //  }
-        // *************************
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -52,8 +52,6 @@ class SelectViewController: UIViewController, UITextFieldDelegate {
     
     @objc func hideKeyboard(_ gestureRecognizer: UIGestureRecognizer) {
         searchTextField.resignFirstResponder()
-        print("Touching!")
-        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -66,13 +64,13 @@ extension SelectViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return characterResults.count
+        return characterArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "resultCell", for: indexPath)
         
-        let character = characterResults[indexPath.row]
+        let character = characterArray[indexPath.row]
         cell.textLabel?.text = character.name
         
         return cell
