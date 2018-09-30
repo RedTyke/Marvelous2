@@ -19,14 +19,12 @@ class SelectViewController: UIViewController, UITextFieldDelegate {
     @IBAction func goButtonPressed(_ sender: Any) {
         
         characterArray = []
-        print("Button pressed")
+        
         if let character = searchTextField.text {
             
             Character.characterDetail(for: character) { (results: [Character]) in
-               // this is not running
-                print("Completion handler called")
+            
                 for result in results {
-                   
                     self.characterArray.append(result)
                     print("\(result)\n\n")
                 }
@@ -60,26 +58,3 @@ class SelectViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
-extension SelectViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return characterArray.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "resultCell", for: indexPath)
-        
-        let character = characterArray[indexPath.row]
-        cell.textLabel?.text = character.name
-        
-        return cell
-        
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("You selected row \(indexPath)")
-    }
-    
-    
-}
