@@ -8,13 +8,14 @@
 
 import UIKit
 
-class SelectViewController: UIViewController, UITextFieldDelegate {
+class SelectViewController: UIViewController {
     
     var characterArray: [Character] = []
+    let resultsCellId = "resultsCell"
+    let noResultCellId = "NoResultCell"
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchTextField: UITextField!
-    
     
     @IBAction func goButtonPressed(_ sender: Any) {
         
@@ -23,7 +24,7 @@ class SelectViewController: UIViewController, UITextFieldDelegate {
         if let character = searchTextField.text {
             
             Character.characterDetail(for: character) { (results: [Character]) in
-            
+                
                 for result in results {
                     self.characterArray.append(result)
                     print("\(result)\n\n")
@@ -42,6 +43,12 @@ class SelectViewController: UIViewController, UITextFieldDelegate {
         tableView.delegate = self
         searchTextField.delegate = self
         
+        tableView.register(ResultTableViewCell.self, forCellReuseIdentifier: resultsCellId)
+        tableView.register(NoResultTableViewCell.self, forCellReuseIdentifier: noResultCellId)
+        
+        tableView.backgroundColor = .red
+        
+        
         // hide keyboard
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         gestureRecognizer.cancelsTouchesInView = false
@@ -52,9 +59,15 @@ class SelectViewController: UIViewController, UITextFieldDelegate {
         searchTextField.resignFirstResponder()
     }
     
+}
+
+
+
+extension SelectViewController: UITextFieldDelegate {
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchTextField.resignFirstResponder()
         return false
     }
+    
 }
-

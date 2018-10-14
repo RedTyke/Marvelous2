@@ -24,7 +24,7 @@ struct Character: Codable {
     var name: String
     var description: String
     
-   
+    
     
     static func characterDetail(for character: String, completion: @escaping ([Character]) -> () ) {
         
@@ -45,10 +45,11 @@ struct Character: Codable {
                 for character in results.data.results {
                     characterArray.append(character)
                     print("characterArray: Name:\(character.name)\n")
-                    
-                completion(characterArray)
-                    
                 }
+                completion(characterArray)
+                print("*** Data fetch complete ***")
+                
+                
             } catch let jsonErr {
                 print("Error serializing json:", jsonErr)
             }

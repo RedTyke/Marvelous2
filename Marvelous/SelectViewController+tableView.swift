@@ -11,28 +11,36 @@ import UIKit
 extension SelectViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let characterCount = characterArray.count
-        
-        if characterCount == 0 {
+        if characterArray.count == 0 {
             return 1
         } else {
-        return characterArray.count
+            return characterArray.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if characterArray.count == 0 {
-            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NoResultCell", for: indexPath) as! NoResultTableViewCell
             return cell
         } else {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "resultCell", for: indexPath)
-        
-        let character = characterArray[indexPath.row]
-        cell.textLabel?.text = character.name
-        
-        return cell
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "resultsCell", for: indexPath) as! ResultTableViewCell
+            let character = characterArray[indexPath.row]
+            
+            cell.Namelabel.text = character.name
+            
+            
+            return cell
+        }
+    }
+    
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if characterArray.count == 0 {
+            return CGFloat(80)
+        } else {
+            return CGFloat(50)
         }
     }
     

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		204BDE11215F8C4D002590C2 /* SelectViewController+tableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204BDE10215F8C4D002590C2 /* SelectViewController+tableView.swift */; };
 		204BDE13215F8E35002590C2 /* NoResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204BDE12215F8E35002590C2 /* NoResultTableViewCell.swift */; };
+		208BDBD52162B8F00071CB81 /* ResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208BDBD42162B8F00071CB81 /* ResultTableViewCell.swift */; };
 		5253656A212804E800D30E4C /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52536569212804E800D30E4C /* Character.swift */; };
 		5265181B21249C6200498252 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5265181A21249C6200498252 /* AppDelegate.swift */; };
 		5265181D21249C6200498252 /* SelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5265181C21249C6200498252 /* SelectViewController.swift */; };
@@ -23,6 +24,7 @@
 		133360F29C80B470060A77B3 /* Pods-Marvelous.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Marvelous.release.xcconfig"; path = "Pods/Target Support Files/Pods-Marvelous/Pods-Marvelous.release.xcconfig"; sourceTree = "<group>"; };
 		204BDE10215F8C4D002590C2 /* SelectViewController+tableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelectViewController+tableView.swift"; sourceTree = "<group>"; };
 		204BDE12215F8E35002590C2 /* NoResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultTableViewCell.swift; sourceTree = "<group>"; };
+		208BDBD42162B8F00071CB81 /* ResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewCell.swift; sourceTree = "<group>"; };
 		52536569212804E800D30E4C /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		5265181721249C6200498252 /* Marvelous.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Marvelous.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5265181A21249C6200498252 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 				5265182321249C6500498252 /* LaunchScreen.storyboard */,
 				5265182621249C6500498252 /* Info.plist */,
 				204BDE12215F8E35002590C2 /* NoResultTableViewCell.swift */,
+				208BDBD42162B8F00071CB81 /* ResultTableViewCell.swift */,
 			);
 			path = Marvelous;
 			sourceTree = "<group>";
@@ -214,6 +217,7 @@
 			files = (
 				5253656A212804E800D30E4C /* Character.swift in Sources */,
 				5265181D21249C6200498252 /* SelectViewController.swift in Sources */,
+				208BDBD52162B8F00071CB81 /* ResultTableViewCell.swift in Sources */,
 				5265181B21249C6200498252 /* AppDelegate.swift in Sources */,
 				204BDE11215F8C4D002590C2 /* SelectViewController+tableView.swift in Sources */,
 				5282EB9721285694003FA824 /* JSON.swift in Sources */,
