@@ -48,6 +48,7 @@ struct Character: Codable {
                     print("Arraycount: \(characterArray.count)")
                     print("characterArray: Name:\(character.name)\n")
                 }
+                
                 print("*** Data fetch complete ***")
             
             } catch let jsonErr {

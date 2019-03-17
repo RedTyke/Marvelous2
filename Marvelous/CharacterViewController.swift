@@ -20,21 +20,22 @@ class CharacterViewController: UICollectionViewController {
 override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     
-    DispatchQueue.global(qos: .background).async {
-    
-        Character.characterDetail { (results: [Character]) in
+    // FIX:  This is not running as array in completion handler is empty...it's not treating it correctly....nothing is being pased back.....
+        Character.characterDetail { characterArray in
             
-            for result in results {
+            for result in characterArray {
                 self.characters.append(result)
+            print("Badger")
             }
-        }
+        
     
     DispatchQueue.main.async {
         print("EY UP!!!  Count \(self.characters.count)")
         self.collectionView.reloadData()
     }
-        
+            
     }
+    
     
     print("This happened.........")
     
