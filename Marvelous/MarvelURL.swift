@@ -24,7 +24,9 @@ func getAllCharactersURL() -> String {
     let ts = Date().timeIntervalSince1970.description
     let hash = "1" + MarvelKeys.privateKey + MarvelKeys.publicKey
     let urlClose = "&apikey=\(MarvelKeys.publicKey)"
-    let mainUrl = "https://gateway.marvel.com/v1/public/characters?limit=100&offset=100&ts=1\(urlClose)&hash=\(hash.md5())"
+   // let mainUrl = "https://gateway.marvel.com/v1/public/characters?limit=100&offset=100&ts=1\(urlClose)&hash=\(hash.md5())"
+    let mainUrl = "https://gateway.marvel.com/v1/public/characters?&ts=1\(urlClose)&hash=\(hash.md5())"
+    
     
     // use limit and pull back - max pull back 100
     

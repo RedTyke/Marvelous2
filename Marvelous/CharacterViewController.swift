@@ -15,12 +15,34 @@ class CharacterViewController: UICollectionViewController {
     
     
     var characters: [Character] = []
+   
+    
+override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    
+    DispatchQueue.global(qos: .background).async {
+    
+        Character.characterDetail { (results: [Character]) in
+            
+            for result in results {
+                self.characters.append(result)
+            }
+        }
+    
+    DispatchQueue.main.async {
+        print("EY UP!!!  Count \(self.characters.count)")
+        self.collectionView.reloadData()
+    }
+        
+    }
+    
+    print("This happened.........")
+    
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        characters = Character.characterDetail()
-        
         
     }
 
@@ -36,12 +58,13 @@ class CharacterViewController: UICollectionViewController {
         let character = characters[indexPath.item]
         cell.name.text = character.name
         
-        
+        /*
         let imageURL = character.thumbnail.path + "/portrait_medium.jpg"
         if let url = URL(string: imageURL) {
         let request = URLRequest(url: url)
         cell.imageWebView.load(request)
         }
+ */
         
         return cell
     }

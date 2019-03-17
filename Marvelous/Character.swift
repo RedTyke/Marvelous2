@@ -26,7 +26,7 @@ struct Character: Codable {
     var thumbnail: Thumbnail
     
     
-    static func characterDetail() -> [Character] {
+    static func characterDetail(completion: @escaping ([Character]) -> () ) {
         
         var characterArray: [Character] = []
         
@@ -45,17 +45,16 @@ struct Character: Codable {
                 
                 for character in results.data.results {
                     characterArray.append(character)
+                    print("Arraycount: \(characterArray.count)")
                     print("characterArray: Name:\(character.name)\n")
                 }
                 print("*** Data fetch complete ***")
-                
-                
+            
             } catch let jsonErr {
                 print("Error serializing json:", jsonErr)
             }
             }.resume()
-        
-        return characterArray
+    
     }
     
 }
