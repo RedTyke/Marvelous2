@@ -9,13 +9,13 @@
 import Foundation
 
 struct Header: Codable {
-    var code: Int
+    //var code: Int
     var data: Results
     
 }
 
 struct Results: Codable {
-    var count: Int
+    //var count: Int
     var results: [Character]
 }
 
@@ -23,20 +23,21 @@ struct Character: Codable {
     
     var name: String
     var description: String
+    var thumbnail: Thumbnail
     
     
-    
-    static func characterDetail(for character: String, completion: @escaping ([Character]) -> () ) {
+    static func characterDetail() -> [Character] {
         
         var characterArray: [Character] = []
         
-        let jsonUrl = createURL(forCharacter: character)
-        guard let url = URL(string: jsonUrl) else { return }
+        let jsonUrl = getAllCharactersURL()
+        
+        guard let url = URL(string: jsonUrl) else { fatalError("URL Failed") }
         print(url)
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             
-            guard let data = data else { return }
+            guard let data = data else { fatalError("No data returned") }
             
             do {
                 let decoder = JSONDecoder()
@@ -46,7 +47,6 @@ struct Character: Codable {
                     characterArray.append(character)
                     print("characterArray: Name:\(character.name)\n")
                 }
-                completion(characterArray)
                 print("*** Data fetch complete ***")
                 
                 
@@ -54,6 +54,15 @@ struct Character: Codable {
                 print("Error serializing json:", jsonErr)
             }
             }.resume()
+        
+        return characterArray
     }
     
+}
+
+struct Thumbnail: Codable {
+    var path: String
+    
+    // Add '/portrait_medium.jpg' to end for a 100x150
+    // Add _xlarge, _fantastic, _uncanny, _incredible for other variants
 }
