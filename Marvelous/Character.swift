@@ -24,40 +24,6 @@ struct Character: Codable {
     var name: String
     var description: String
     var thumbnail: Thumbnail
-    
-    
-    static func characterDetail(completion: @escaping ([Character]) -> () ) {
-        
-        var characterArray: [Character] = []
-        
-        let jsonUrl = getAllCharactersURL()
-        
-        guard let url = URL(string: jsonUrl) else { fatalError("URL Failed") }
-        print(url)
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            
-            guard let data = data else { fatalError("No data returned") }
-            
-            do {
-                let decoder = JSONDecoder()
-                let results = try decoder.decode(Header.self, from: data)
-                
-                for character in results.data.results {
-                    characterArray.append(character)
-                    print("Arraycount: \(characterArray.count)")
-                    print("characterArray: Name:\(character.name)\n")
-                }
-                
-                print("*** Data fetch complete ***")
-            
-            } catch let jsonErr {
-                print("Error serializing json:", jsonErr)
-            }
-            }.resume()
-    
-    }
-    
 }
 
 struct Thumbnail: Codable {

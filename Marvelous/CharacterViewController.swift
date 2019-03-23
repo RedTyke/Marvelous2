@@ -1,22 +1,10 @@
-//
-//  CharacterViewController.swift
-//  Marvelous
-//
-//  Created by John McNiffe on 17/03/2019.
-//  Copyright © 2019 John McNiffe. All rights reserved.
-//
-
 import UIKit
-
-
 
 class CharacterViewController: UICollectionViewController {
 
-    
-    
-    var characters: [Character] = []
-   
-    
+var characters: [Character] = []
+ 
+/*
 override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     
@@ -33,23 +21,63 @@ override func viewWillAppear(_ animated: Bool) {
         print("EY UP!!!  Count \(self.characters.count)")
         self.collectionView.reloadData()
     }
+ 
             
     }
-    
+ 
     
     print("This happened.........")
     
     }
-    
+   */
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        performSelector(inBackground: #selector(fetchJSON), with: nil)
+        
+        
     }
-
+    
+    
+    @objc func fetchJSON() {
+        
+        let urlString = getAllCharactersURL()
+        
+        if let url = URL(string: urlString) {
+            if let data = try? Data(contentsOf: url) {
+                parse(json: data)
+                return
+            }
+            
+        }
+     fatalError("Failed to fetch JSON")
+    }
+    
+    
+    func parse(json: Data) {
+        
+        let decoder = JSONDecoder()
+        
+        if let results = try? decoder.decode(Header.self, from: json) {
+            
+            for character in results.data.results {
+                characters.append(character)
+                print("Arraycount: \(characters.count)")
+                print("characterArray: Name:\(character.name)\n")
+            }
+            
+            print("*** Data fetch complete ***")
+            collectionView.performSelector(onMainThread: #selector(UICollectionView.reloadData), with: nil, waitUntilDone: false)
+            
+        } else {
+            print("Error serializing json")
+        }
+    }
+    
+    
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return characters.count
     }
 
@@ -59,13 +87,12 @@ override func viewWillAppear(_ animated: Bool) {
         let character = characters[indexPath.item]
         cell.name.text = character.name
         
-        /*
+        
         let imageURL = character.thumbnail.path + "/portrait_medium.jpg"
         if let url = URL(string: imageURL) {
-        let request = URLRequest(url: url)
-        cell.imageWebView.load(request)
+            cell.imageView.load(url: url)
         }
- */
+ 
         
         return cell
     }

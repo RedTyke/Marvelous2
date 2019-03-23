@@ -10,10 +10,9 @@ import UIKit
 import WebKit
 
 class CharacterCell: UICollectionViewCell {
-    
-    @IBOutlet var imageWebView: WKWebView!
+
     @IBOutlet var name: UILabel!
-    
+    @IBOutlet var imageView: UIImageView!
     
     
     
