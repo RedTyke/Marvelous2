@@ -4,37 +4,14 @@ class CharacterViewController: UICollectionViewController {
 
 var characters: [Character] = []
  
-/*
-override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    
-    // FIX:  This is not running as array in completion handler is empty...it's not treating it correctly....nothing is being pased back.....
-        Character.characterDetail { characterArray in
-            
-            for result in characterArray {
-                self.characters.append(result)
-            print("Badger")
-            }
-        
-    
-    DispatchQueue.main.async {
-        print("EY UP!!!  Count \(self.characters.count)")
-        self.collectionView.reloadData()
-    }
- 
-            
-    }
- 
-    
-    print("This happened.........")
-    
-    }
-   */
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        title = "Marvellous"
+      
         performSelector(inBackground: #selector(fetchJSON), with: nil)
+      
+      
         
         
     }
@@ -80,6 +57,18 @@ override func viewWillAppear(_ animated: Bool) {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return characters.count
     }
+  
+  
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+    let vc = DetailViewController()
+    let character = characters[indexPath.row]
+    vc.name = character.name
+    vc.detail = character.description
+    print("Name: \(character.name), Description: \(character.description)")
+    navigationController?.pushViewController(vc, animated: true)
+    
+  }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Character", for: indexPath) as? CharacterCell else { fatalError("Unable to dequeue a Character Cell") }
